@@ -387,7 +387,7 @@ export default function HebrewFlashcards() {
 
   return (
     <div style={{
-      minHeight: "100vh",
+      height: "100vh",
       background: "linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%)",
       fontFamily: "'Segoe UI', system-ui, sans-serif",
       color: "#e8e8f0",
