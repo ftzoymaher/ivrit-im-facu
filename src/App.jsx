@@ -305,8 +305,8 @@ export default function HebrewFlashcards() {
   const [animating, setAnimating] = useState(false);
   const [known, setKnown] = useState(new Set());
   const [learning, setLearning] = useState(new Set());
-  const [showTranslit, setShowTranslit] = useState(true);
-  const [showNiqqud, setShowNiqqud] = useState(true);
+  const [showTranslit, setShowTranslit] = useState(false);
+  const [showNiqqud, setShowNiqqud] = useState(false);
   const [onlyLearning, setOnlyLearning] = useState(false);
   const [finished, setFinished] = useState(false);
   const [lang, setLang] = useState("en");
@@ -403,6 +403,8 @@ export default function HebrewFlashcards() {
             <span style={{ color: "#7eb8f7" }}>עברית</span>
             <span style={{ color: "#aaa", fontSize: 13, marginLeft: 10, fontWeight: 400 }}>{t.title}</span>
           </h1>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
           <div style={{ display: "flex", gap: 10, alignItems: "center", fontSize: 13 }}>
             {/* Pill language toggle */}
             <div style={{
