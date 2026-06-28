@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 const ALL_WORDS = [
   // NOUNS
@@ -602,6 +603,7 @@ export default function HebrewFlashcards() {
       <div style={{ marginTop: 32, fontSize: 12, color: "#444", textAlign: "center" }}>
         <span>{t.legend}</span>
       </div>
+      <Analytics />
     </div>
   );
 }
