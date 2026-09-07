@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { DEFAULT_TEXTS } from "../data/typingTexts.js";
 
 const STORAGE_KEY = "hebrewTypingCustomTexts";
@@ -38,6 +38,8 @@ export default function TypingPractice() {
   const [newTitle, setNewTitle] = useState("");
   const [newText, setNewText] = useState("");
   const textareaRef = useRef(null);
+  const textContainerRef = useRef(null);
+  const activeCharRef = useRef(null);
 
   const current = allTexts.find(t => t.id === selectedId) ?? allTexts[0];
   const target = current?.text ?? "";
@@ -52,7 +54,14 @@ export default function TypingPractice() {
   }
 
   function handleChange(e) {
-    setTyped(e.target.value.slice(0, target.length));
+    let value = e.target.value.slice(0, target.length);
+    // The reference text's line breaks aren't something the user types —
+    // auto-insert them as soon as typing reaches that point, instead of
+    // requiring an Enter keypress.
+    while (target[value.length] === "\n") {
+      value += "\n";
+    }
+    setTyped(value);
   }
 
   function handleAddText(e) {
@@ -82,6 +91,11 @@ export default function TypingPractice() {
     textareaRef.current?.focus();
   }
 
+  // Auto-scroll the reference text so the active character stays in view.
+  useEffect(() => {
+    activeCharRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [typed, selectedId]);
+
   const correctCount = useMemo(() => {
     let c = 0;
     for (let i = 0; i < typed.length; i++) {
@@ -99,7 +113,6 @@ export default function TypingPractice() {
   return (
     <div style={{
       height: "100%",
-      overflowY: "auto",
       background: "linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%)",
       fontFamily: "'Segoe UI', system-ui, sans-serif",
       color: "#e8e8f0",
@@ -193,12 +206,13 @@ export default function TypingPractice() {
 
         {/* Reference text with per-character highlighting */}
         <div
+          ref={textContainerRef}
           onClick={() => textareaRef.current?.focus()}
           dir="rtl"
           style={{
             background: "#14142a", border: "1px solid #2a2a4a", borderRadius: 16,
             padding: 28, fontSize: 26, lineHeight: 1.9, cursor: "text", marginBottom: 16,
-            minHeight: 140,
+            height: 'calc(100% - 560px)', maxHeight: 900, overflowY: "auto", scrollBehavior: "smooth",
           }}
         >
           {lines.map((line, li) => {
@@ -207,16 +221,21 @@ export default function TypingPractice() {
               let color = "#555";
               let background = "transparent";
               let textDecoration = "none";
+              const isActive = idx === typed.length;
               if (idx < typed.length) {
                 const ok = typed[idx] === ch;
                 color = ok ? "#4ade80" : "#f87171";
                 background = ok ? "transparent" : "#f8717125";
                 textDecoration = ok ? "none" : "underline";
-              } else if (idx === typed.length) {
+              } else if (isActive) {
                 background = "#7eb8f755";
               }
               return (
-                <span key={idx} style={{ color, background, textDecoration, borderRadius: 3 }}>
+                <span
+                  key={idx}
+                  ref={isActive ? activeCharRef : null}
+                  style={{ color, background, textDecoration, borderRadius: 3 }}
+                >
                   {ch}
                 </span>
               );
@@ -233,11 +252,11 @@ export default function TypingPractice() {
           onChange={handleChange}
           dir="rtl"
           autoFocus
-          rows={3}
-          placeholder="Empezá a escribir acá..."
+          rows={1}
+          placeholder="..."
           style={{
             width: "100%", background: "#1a1a2e", border: "1px solid #444", borderRadius: 12,
-            padding: 14, fontSize: 18, color: "#e8e8f0", fontFamily: "inherit", resize: "none",
+            padding: 14, fontSize: 26, lineHeight: 1.9, color: "#e8e8f0", fontFamily: "inherit", resize: "none",
           }}
         />
 
