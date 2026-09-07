@@ -120,6 +120,7 @@ export default function TypingPractice() {
       flexDirection: "column",
       alignItems: "center",
       padding: "20px 16px",
+      overflowY: "auto",
     }}>
       <div style={{ width: "100%", maxWidth: 700 }}>
         <h1 style={{ margin: "0 0 20px", fontSize: 22, fontWeight: 700 }}>
@@ -212,7 +213,7 @@ export default function TypingPractice() {
           style={{
             background: "#14142a", border: "1px solid #2a2a4a", borderRadius: 16,
             padding: 28, fontSize: 26, lineHeight: 1.9, cursor: "text", marginBottom: 16,
-            height: 'calc(100% - 560px)', maxHeight: 900, overflowY: "auto", scrollBehavior: "smooth",
+            height: "min(45vh, 500px)", overflowY: "auto", scrollBehavior: "smooth",
           }}
         >
           {lines.map((line, li) => {

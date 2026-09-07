@@ -16,9 +16,9 @@ export default function App() {
   const Page = PAGES[page];
 
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
+    <div className="app-shell" style={{ display: "flex", height: "100vh" }}>
       <Sidebar current={page} onSelect={setPage} />
-      <main style={{ flex: 1, minWidth: 0, height: "100vh" }}>
+      <main className="app-main" style={{ flex: 1, minWidth: 0, height: "100vh" }}>
         <Page />
       </main>
       <Analytics />

@@ -6,7 +6,7 @@ const NAV_ITEMS = [
 
 export default function Sidebar({ current, onSelect }) {
   return (
-    <nav style={{
+    <nav className="app-sidebar" style={{
       width: 220,
       flexShrink: 0,
       height: "100vh",
@@ -17,7 +17,7 @@ export default function Sidebar({ current, onSelect }) {
       padding: "20px 12px",
       fontFamily: "'Segoe UI', system-ui, sans-serif",
     }}>
-      <div style={{ fontSize: 18, fontWeight: 700, color: "#7eb8f7", marginBottom: 24, paddingLeft: 8 }}>
+      <div className="sidebar-logo" style={{ fontSize: 18, fontWeight: 700, color: "#7eb8f7", marginBottom: 24, paddingLeft: 8 }}>
         עברית
       </div>
       {NAV_ITEMS.map(item => (

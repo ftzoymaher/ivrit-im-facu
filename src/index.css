@@ -4,6 +4,57 @@
   padding: 0;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
 body {
   overflow: hidden;
+}
+
+/* Mobile browsers resize the viewport as their toolbar shows/hides;
+   100dvh tracks the actual visible area instead of the tallest case. */
+@supports (height: 100dvh) {
+  .app-shell, .app-sidebar, .app-main {
+    height: 100dvh !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-shell {
+    flex-direction: column;
+  }
+
+  /* Sidebar becomes a bottom tab bar on narrow screens. */
+  .app-sidebar {
+    width: 100% !important;
+    height: auto !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-around;
+    padding: 6px !important;
+    border-right: none !important;
+    border-top: 1px solid #2a2a4a;
+    order: 2;
+    flex-shrink: 0;
+  }
+  .app-sidebar .sidebar-logo {
+    display: none;
+  }
+  .app-sidebar button {
+    flex-direction: column;
+    gap: 2px !important;
+    flex: 1;
+    font-size: 11px !important;
+    padding: 6px 4px !important;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .app-main {
+    height: auto !important;
+    flex: 1;
+    min-height: 0;
+    order: 1;
+  }
 }
